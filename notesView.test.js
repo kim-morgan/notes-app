@@ -3,7 +3,6 @@
  */
 
 const NotesView = require("./notesView")
-const NotesModel = require("./notesModel")
 const fs = require('fs');
 
 // create a new instance of NotesModel and adds two notes to it.
@@ -17,11 +16,8 @@ const notesModelMock = {
 
 describe("NotesView", () => {
   it("have a displayNotes method that adds notes to page", () => {
-    const myNotes = new NotesModel();
-    myNotes.addNote("buy milk");
-    myNotes.addNote("go to gym");
     document.body.innerHTML = fs.readFileSync('./index.html');
-    const notesView = new NotesView(myNotes);
+    const notesView = new NotesView(notesModelMock);
     notesView.displayNotes();
     expect(document.querySelectorAll('div.note').length).toBe(2);
   })
