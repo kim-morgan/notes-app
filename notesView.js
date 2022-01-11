@@ -13,6 +13,8 @@ class NotesView {
   }
 
   displayNotes() {
+    this.removeNotes();
+
     let notes = this.notesModelInstance.getNotes();
 
     for (const note of notes) {
@@ -21,6 +23,20 @@ class NotesView {
       div.innerText = note;
       this.mainContainerEl.append(div);
     }
+
+    this.clearInput();
+  }
+
+  removeNotes() {
+    const notes = document.querySelectorAll('.note');
+
+    for (const note of notes) {
+      note.remove();
+    }
+  }
+
+  clearInput() {
+    this.userInput.value = "";
   }
 
 }

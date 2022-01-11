@@ -5,6 +5,8 @@
 const NotesView = require("./notesView")
 const fs = require('fs');
 
+
+
 const notesModelMock = {
   getNotes: () => { return ["buy milk", "go to gym"]; }
 }
@@ -32,5 +34,23 @@ describe("NotesView", () => {
     const notesButton = document.querySelector("#add-note");
     notesButton.click();
     expect(document.querySelectorAll('div.note').length).toBe(1);
+  })
+
+  it("displayNotes should only show the notes one time", () => {
+    document.body.innerHTML = fs.readFileSync('./index.html');
+    const notesView = new NotesView(notesModelMock);
+    notesView.displayNotes();
+    notesView.displayNotes();
+    expect(document.querySelectorAll('div.note').length).toBe(2);
+  })
+
+  it("should clear input value after button click", () => {
+    document.body.innerHTML = fs.readFileSync('./index.html');
+    const notesView = new NotesView(secondNotesModelMock);
+    const inputText = document.querySelector("#message-input");
+    inputText.value = "Buy milk";
+    const notesButton = document.querySelector("#add-note");
+    notesButton.click();
+    expect(inputText.value).toBe("");
   })
 })
