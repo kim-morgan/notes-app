@@ -25,9 +25,42 @@
     }
   });
 
+  // notesView.js
+  var require_notesView = __commonJS({
+    "notesView.js"(exports, module) {
+      var NotesView2 = class {
+        constructor(notesModelInstance) {
+          this.notesModelInstance = notesModelInstance;
+          this.mainContainerEl = document.querySelector("#main-container");
+          this.addNoteButton = document.querySelector("#add-note");
+          this.userInput = document.querySelector("#message-input");
+          this.addNoteButton.addEventListener("click", () => {
+            this.notesModelInstance.addNote(this.userInput.value);
+          });
+        }
+        displayNotes() {
+          let notes = this.notesModelInstance.getNotes();
+          for (const note of notes) {
+            let div = document.createElement("div");
+            div.className = "note";
+            div.innerText = note;
+            this.mainContainerEl.append(div);
+          }
+        }
+      };
+      module.exports = NotesView2;
+      module.exports = NotesView2;
+    }
+  });
+
   // index.js
   var NotesModel = require_notesModel();
-  console.log("The notes app is running");
-  var notesmodel = new NotesModel();
-  console.log(notesmodel.getNotes());
+  var NotesView = require_notesView();
+  var notesModel = new NotesModel();
+  notesModel.addNote("This is an example note");
+  console.log(notesModel);
+  var view = new NotesView(notesModel);
+  console.log(document.querySelector("body"));
+  view.displayNotes();
+  console.log(notesView);
 })();

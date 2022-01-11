@@ -1,14 +1,16 @@
-const NotesModel = require("./notesModel")
-
 class NotesView {
 
   constructor(notesModelInstance) {
     this.notesModelInstance = notesModelInstance;
     this.mainContainerEl = document.querySelector('#main-container');
-  }
+    this.addNoteButton = document.querySelector('#add-note')
+    this.userInput = document.querySelector("#message-input")
 
-//   get the list of notes from the model.
-// for each note, create a new div element on the page (with an HTML class "note").
+    this.addNoteButton.addEventListener("click", () => {
+      this.notesModelInstance.addNote(this.userInput.value);
+      this.displayNotes();
+    })
+  }
 
   displayNotes() {
     let notes = this.notesModelInstance.getNotes();
