@@ -17,6 +17,10 @@ class NotesModel {
     this.notes = []
   }
 
+  setNotes(array) {
+    this.notes = array
+  }
+
 }
 
 module.exports = NotesModel;

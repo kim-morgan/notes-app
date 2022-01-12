@@ -22,6 +22,12 @@ describe('NotesModel',() => {
 
   })
 
+  it('should set notes to array', () => {
+    const notesmodel = new NotesModel();
+    notesmodel.setNotes(['buy milk', 'go to gym'])
+    expect(notesmodel.getNotes()).toEqual(['buy milk', 'go to gym'])
+  })
+
   
 
 })
