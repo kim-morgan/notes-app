@@ -17,18 +17,20 @@ const secondNotesModelMock = {
   addNote: (note) => { secondNotesModelMock.notes.push(note); }
 }
 
+const notesApiMock = {createNote: () => {}};
+
 describe("NotesView", () => {
 
   it("have a displayNotes method that adds notes to page", () => {
     document.body.innerHTML = fs.readFileSync('./index.html');
-    const notesView = new NotesView(notesModelMock);
+    const notesView = new NotesView(notesModelMock, notesApiMock);
     notesView.displayNotes();
     expect(document.querySelectorAll('div.note').length).toBe(2);
   })
 
   it("should be able to input and add a note", () => {
     document.body.innerHTML = fs.readFileSync('./index.html');
-    const notesView = new NotesView(secondNotesModelMock);
+    const notesView = new NotesView(secondNotesModelMock, notesApiMock);
     const inputText = document.querySelector("#message-input");
     inputText.value = "Buy milk";
     const notesButton = document.querySelector("#add-note");
@@ -38,7 +40,7 @@ describe("NotesView", () => {
 
   it("displayNotes should only show the notes one time", () => {
     document.body.innerHTML = fs.readFileSync('./index.html');
-    const notesView = new NotesView(notesModelMock);
+    const notesView = new NotesView(notesModelMock, notesApiMock);
     notesView.displayNotes();
     notesView.displayNotes();
     expect(document.querySelectorAll('div.note').length).toBe(2);
@@ -46,7 +48,7 @@ describe("NotesView", () => {
 
   it("should clear input value after button click", () => {
     document.body.innerHTML = fs.readFileSync('./index.html');
-    const notesView = new NotesView(secondNotesModelMock);
+    const notesView = new NotesView(secondNotesModelMock, notesApiMock);
     const inputText = document.querySelector("#message-input");
     inputText.value = "Buy milk";
     const notesButton = document.querySelector("#add-note");

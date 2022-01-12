@@ -1,13 +1,15 @@
 class NotesView {
 
-  constructor(notesModelInstance) {
+  constructor(notesModelInstance, notesApiInstance) {
     this.notesModelInstance = notesModelInstance;
+    this.notesApiInstance = notesApiInstance;
     this.mainContainerEl = document.querySelector('#main-container');
     this.addNoteButton = document.querySelector('#add-note')
     this.userInput = document.querySelector("#message-input")
 
     this.addNoteButton.addEventListener("click", () => {
       this.notesModelInstance.addNote(this.userInput.value);
+      this.notesApiInstance.createNote(this.userInput.value, console.log);
       this.displayNotes();
     })
   }
