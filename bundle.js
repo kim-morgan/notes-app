@@ -93,17 +93,41 @@
     }
   });
 
+  // emojiApi.js
+  var require_emojiApi = __commonJS({
+    "emojiApi.js"(exports, module) {
+      var EmojiApi2 = class {
+        convertToEmoji(text) {
+          const newNote = { "text": text };
+          fetch("https://makers-emojify.herokuapp.com/", {
+            method: "POST",
+            headers: {
+              "Content-type": "application/json"
+            },
+            body: JSON.stringify(newNote)
+          }).then((response) => response.json()).then((data) => {
+            return data.emojified_text;
+          });
+        }
+      };
+      module.exports = EmojiApi2;
+    }
+  });
+
   // index.js
   var NotesModel = require_notesModel();
   var NotesView = require_notesView();
   var NotesApi = require_NotesApi();
+  var EmojiApi = require_emojiApi();
   var api = new NotesApi();
-  var model = new NotesModel();
+  var emojiApi = new EmojiApi();
+  var model = new NotesModel(emojiApi);
   var view = new NotesView(model, api);
   api.loadNotes((notes) => {
     console.log(notes);
     model.setNotes(notes);
     view.displayNotes();
   });
+  console.log(emojiApi.convertToEmoji("Hello, :earth_africa:"));
   model.addNote("This is an example note");
 })();

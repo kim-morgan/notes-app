@@ -1,10 +1,12 @@
 const NotesModel = require('./notesModel')
 const NotesView = require('./notesView')
 const NotesApi = require('./NotesApi')
+const EmojiApi = require("./emojiApi")
 
 
 const api = new NotesApi();
-const model = new NotesModel();
+const emojiApi = new EmojiApi();
+const model = new NotesModel(emojiApi);
 const view = new NotesView(model, api);
 
 api.loadNotes((notes) => {
@@ -13,6 +15,8 @@ api.loadNotes((notes) => {
   model.setNotes(notes);
   view.displayNotes();
 });
+
+console.log(emojiApi.convertToEmoji("Hello, :earth_africa:"))
 
 
 
