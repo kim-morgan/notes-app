@@ -39,11 +39,16 @@
           this.mainContainerEl = document.querySelector("#main-container");
           this.addNoteButton = document.querySelector("#add-note");
           this.userInput = document.querySelector("#message-input");
+          this.resetNotesButton = document.querySelector("#reset-notes");
           this.addNoteButton.addEventListener("click", async () => {
             const emojifiedText = await this.emojiApiInstance.convertToEmoji(this.userInput.value, (res) => res);
-            console.log(emojifiedText);
             this.notesModelInstance.addNote(emojifiedText);
             this.notesApiInstance.createNote(emojifiedText, console.log);
+            this.displayNotes();
+          });
+          this.resetNotesButton.addEventListener("click", () => {
+            this.notesModelInstance.reset();
+            this.notesApiInstance.resetNotes();
             this.displayNotes();
           });
         }
@@ -90,6 +95,14 @@
             },
             body: JSON.stringify(newNote)
           }).then((response) => response.json());
+        }
+        async resetNotes() {
+          return fetch("http://localhost:3000/notes", {
+            method: "DELETE",
+            headers: {
+              "Content-type": "application/json"
+            }
+          }).then((response) => response.json()).then((res) => res).catch((e) => console.log(e));
         }
       };
       module.exports = NotesApi2;
