@@ -6,8 +6,8 @@ const EmojiApi = require("./emojiApi")
 
 const api = new NotesApi();
 const emojiApi = new EmojiApi();
-const model = new NotesModel(emojiApi);
-const view = new NotesView(model, api);
+const model = new NotesModel();
+const view = new NotesView(model, api, emojiApi);
 
 api.loadNotes((notes) => {
   // This method is new — you'll need to add it to the model class
@@ -16,7 +16,10 @@ api.loadNotes((notes) => {
   view.displayNotes();
 });
 
-console.log(emojiApi.convertToEmoji("Hello, :earth_africa:"))
+const result = emojiApi.convertToEmoji("Hello, :earth_africa:", res => res)
+console.log(result)
+
+// console.log(await emojiApi.convertToEmoji("Hello, :earth_africa:"))
 
 
 

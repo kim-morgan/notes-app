@@ -1,15 +1,18 @@
 class NotesView {
 
-  constructor(notesModelInstance, notesApiInstance) {
+  constructor(notesModelInstance, notesApiInstance, emojiApiInstance ) {
     this.notesModelInstance = notesModelInstance;
     this.notesApiInstance = notesApiInstance;
+    this.emojiApiInstance = emojiApiInstance 
     this.mainContainerEl = document.querySelector('#main-container');
     this.addNoteButton = document.querySelector('#add-note')
     this.userInput = document.querySelector("#message-input")
 
-    this.addNoteButton.addEventListener("click", () => {
-      this.notesModelInstance.addNote(this.userInput.value);
-      this.notesApiInstance.createNote(this.userInput.value, console.log);
+    this.addNoteButton.addEventListener("click", async() => {
+      const emojifiedText = await this.emojiApiInstance.convertToEmoji(this.userInput.value, (res) => res)
+      console.log(emojifiedText)
+      this.notesModelInstance.addNote(emojifiedText);
+      this.notesApiInstance.createNote(emojifiedText, console.log);
       this.displayNotes();
     })
   }
