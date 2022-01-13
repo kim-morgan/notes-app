@@ -10,7 +10,6 @@ class NotesView {
 
     this.addNoteButton.addEventListener("click", async() => {
       const emojifiedText = await this.emojiApiInstance.convertToEmoji(this.userInput.value, (res) => res)
-      console.log(emojifiedText)
       this.notesModelInstance.addNote(emojifiedText);
       this.notesApiInstance.createNote(emojifiedText, console.log);
       this.displayNotes();
