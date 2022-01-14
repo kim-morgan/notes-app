@@ -7,11 +7,18 @@ class NotesView {
     this.mainContainerEl = document.querySelector('#main-container');
     this.addNoteButton = document.querySelector('#add-note')
     this.userInput = document.querySelector("#message-input")
+    this.resetNotesButton = document.querySelector("#reset-notes")
 
     this.addNoteButton.addEventListener("click", async() => {
       const emojifiedText = await this.emojiApiInstance.convertToEmoji(this.userInput.value, (res) => res)
       this.notesModelInstance.addNote(emojifiedText);
       this.notesApiInstance.createNote(emojifiedText, console.log);
+      this.displayNotes();
+    })
+
+    this.resetNotesButton.addEventListener('click', () => {
+      this.notesModelInstance.reset()
+      this.notesApiInstance.resetNotes()
       this.displayNotes();
     })
   }

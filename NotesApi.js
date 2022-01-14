@@ -18,6 +18,19 @@ class NotesApi {
     })
   .then(response => response.json())
   }
+
+  async resetNotes() {
+
+    return fetch('http://localhost:3000/notes', {
+      method: 'DELETE',
+      headers: {
+        'Content-type': 'application/json',
+      },
+    })
+  .then(response => response.json())
+  .then(res => res)
+  .catch(e => console.log(e))
+  }
 }
 
 module.exports = NotesApi
